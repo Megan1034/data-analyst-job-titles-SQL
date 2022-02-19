@@ -55,22 +55,24 @@
 -- Answer: 230
 
 -- 9. Find the name of each company and its average star rating for all companies that have more than 5000 reviews across all locations. How many companies are there with more that 5000 reviews across all locations?
--- select company, avg(star_rating) as rating
+-- select company, 
+-- 		avg(star_rating) as rating
 -- from d_a_jobs
 -- where review_count >5000
--- AND company IS NOT NULL
+-- 		AND company IS NOT NULL
 -- group by company
 -- order by rating
 -- Answer: 40
 
 -- 10. Add the code to order the query in #9 from highest to lowest average star rating. Which company with more than 5000 reviews across all locations in the dataset has the highest star rating? What is that rating?
--- select company, avg(star_rating) as rating
+-- select company, 
+-- 		round(avg(star_rating), 2) as rating
 -- from d_a_jobs
 -- where review_count >5000
--- AND company IS NOT NULL
+-- 		AND company IS NOT NULL
 -- group by company
 -- order by rating desc;
--- Answer: Unilever (tied in top 6) 4.1999998090000000
+-- Answer: Unilever (tied in top 6) 4.199 or with round to 4.20
 
 -- 11. Find all the job titles that contain the word ‘Analyst’. How many different job titles are there?
 -- select count(DISTINCT title)
@@ -83,7 +85,7 @@
 -- select count(title)
 -- from d_a_jobs
 -- where title NOT Ilike '%analy%'
--- -- Answer: 4
+-- Answer: 4
 
 -- 12B. What word do these positions have in common?
 -- select title
@@ -102,13 +104,14 @@
 
 -- BonusB. Which three industries are in the top 4 on this list? 
 -- BonusC. How many jobs have been listed for more than 3 weeks for each of the top 4?
-Select count(domain), domain
-from d_a_jobs
-where domain is not null
-and days_since_posting >21
-and skill ilike '%SQL%'
-group by domain
-order by count(domain) desc
+-- Select count(domain), 
+-- 		domain
+-- from d_a_jobs
+-- where domain is not null
+-- 		and days_since_posting >21
+-- 		and skill ilike '%SQL%'
+-- group by domain
+-- order by count(domain) desc
 -- Answer: 
 -- 62	"Internet and Software"
 -- 61	"Banks and Financial Services"
