@@ -1,16 +1,21 @@
 -- 1. How many rows are in the data_analyst_jobs table?
 -- select count (*) 
 -- from d_a_jobs;
--- -- 1793 lines
+-- Answer: 1793 lines
 
--- -- 2. Write a query to look at just the first 10 rows. What company is associated with the job posting on the 10th row?
+-- 2. Write a query to look at just the first 10 rows. What company is associated with the job posting on the 10th row?
 -- select company 
 -- from d_a_jobs
 -- limit 10
-
 -- Answer: ExxonMobil
 
--- 3. How many postings are in Tennessee? How many are there in either Tennessee or Kentucky?
+-- 3A. How many postings are in Tennessee? 
+-- SELECT count(*)
+-- from d_a_jobs
+-- where location = 'TN'
+-- Answer: 21
+
+-- 3B. How many are there in either Tennessee or Kentucky?
 -- SELECT count(*)
 -- from d_a_jobs
 -- where location in ('TN', 'KY')
@@ -47,7 +52,7 @@
 -- select count(Distinct title)
 -- from d_a_jobs
 -- where location = 'CA'
---Answer: 230
+-- Answer: 230
 
 -- 9. Find the name of each company and its average star rating for all companies that have more than 5000 reviews across all locations. How many companies are there with more that 5000 reviews across all locations?
 -- select company, avg(star_rating) as rating
@@ -56,7 +61,7 @@
 -- AND company IS NOT NULL
 -- group by company
 -- order by rating
---  Answer: 40
+-- Answer: 40
 
 -- 10. Add the code to order the query in #9 from highest to lowest average star rating. Which company with more than 5000 reviews across all locations in the dataset has the highest star rating? What is that rating?
 -- select company, avg(star_rating) as rating
@@ -65,12 +70,47 @@
 -- AND company IS NOT NULL
 -- group by company
 -- order by rating desc;
--- -- Answer: Unilever (tied in top 6) 4.1999998090000000
+-- Answer: Unilever (tied in top 6) 4.1999998090000000
 
 -- 11. Find all the job titles that contain the word ‘Analyst’. How many different job titles are there?
+-- select count(DISTINCT title)
+-- from d_a_jobs
+-- where title iLIKE '%analyst%'
+/* iLIKE statement to eliminate use of OR statements*/
+-- Answer: 774
+
+-- 12A. How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? 
 -- select count(title)
 -- from d_a_jobs
--- where title like '%analyst%'
--- Answer: 4
+-- where title NOT Ilike '%analy%'
+-- -- Answer: 4
 
--- 12. How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common?
+-- 12B. What word do these positions have in common?
+-- select title
+-- from d_a_jobs
+-- where title NOT Ilike '%analy%'
+-- Answer: Tableau
+
+-- BONUS:
+-- BonusA. Find the number of jobs by industry (domain) that require SQL and have been posted longer than 3 weeks.
+-- Select count(title)
+-- from d_a_jobs
+-- where domain is not null
+-- and days_since_posting >21
+-- and skill ilike '%SQL%'
+-- Answer: 403 Jobs
+
+-- BonusB. Which three industries are in the top 4 on this list? 
+-- BonusC. How many jobs have been listed for more than 3 weeks for each of the top 4?
+Select count(domain), domain
+from d_a_jobs
+where domain is not null
+and days_since_posting >21
+and skill ilike '%SQL%'
+group by domain
+order by count(domain) desc
+-- Answer: 
+-- 62	"Internet and Software"
+-- 61	"Banks and Financial Services"
+-- 57	"Consulting and Business Services"
+-- 52	"Health Care"
